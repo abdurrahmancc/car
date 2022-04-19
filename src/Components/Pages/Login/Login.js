@@ -1,14 +1,24 @@
 import React, { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useAuthState,
+  useSendPasswordResetEmail,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
+import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../../Firebase/Firebase.init";
+import PageTitle from "../../Shared/PageTitle/PageTitle";
+import Loading from "./Loading/Loading";
+import SocialLogin from "./SocialLogin/SocialLogin";
 
 const Login = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const navigate = useNavigate();
+  const [users] = useAuthState(auth);
   const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+  const [sendPasswordResetEmail, sending, resetError] = useSendPasswordResetEmail(auth);
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
@@ -18,24 +28,26 @@ const Login = () => {
     const password = passwordRef.current.value;
     signInWithEmailAndPassword(email, password);
   };
-  if (user) {
+
+  if (users) {
     navigate(from, { replace: true });
   }
 
-  const navigateRegister = () => {
-    navigate("/register");
+  const passwordReset = async () => {
+    const email = emailRef.current.value;
+    await sendPasswordResetEmail(email);
+    alert("Sent email");
   };
+
   return (
     <div className="container w-50 mx-auto">
       <h1 className="text-center">Please LogIn</h1>
-      <div className="">
+      <div className="mx-auto w-50">
+        <PageTitle title={"login"}></PageTitle>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control ref={emailRef} type="email" placeholder="Enter email" />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -45,17 +57,30 @@ const Login = () => {
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="Check me out" />
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
+          <Button className="rounded-pill w-25 py-2" variant="primary" type="submit">
+            Login
           </Button>
         </Form>
+        <div>
+          {error && <p className="text-danger text-center">Error: {error.message}</p>}
+          {loading && <p>Loading...</p>}
+        </div>
+        <div>
+          <p className="">
+            New to Genius car?{" "}
+            <Link className="text-decoration-none" to={"/register"}>
+              Please Register
+            </Link>
+          </p>
+          <p className="">
+            Forget Password?
+            <button className="text-decoration-none btn-link btn" onClick={passwordReset}>
+              Reset Password
+            </button>
+          </p>
+        </div>
+        <SocialLogin></SocialLogin>
       </div>
-      <p>
-        New to Genius car?{" "}
-        <Link className="text-decoration-none" to={"/register"}>
-          Please Register
-        </Link>
-      </p>
     </div>
   );
 };

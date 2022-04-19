@@ -1,14 +1,18 @@
 import { signOut } from "firebase/auth";
-import React from "react";
+import React, { useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import auth from "../../../Firebase/Firebase.init";
 import logo from "../../images/logo.png";
 import { HashLink } from "react-router-hash-link";
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const [user] = useAuthState(auth);
+
+  console.log("userssssss", user);
+
   return (
     <>
       <Navbar collapseOnSelect sticky="top" expand="lg" bg="primary" variant="dark">
@@ -19,12 +23,15 @@ const Header = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              {/*   <HashLink activeStyle={{ color: "red" }} to="/home#service">
+              <Nav.Link className="text-white" href="home#service">
                 Service
-              </HashLink> */}
-              <HashLink activeStyle={{ color: "red" }} to="/home#expert">
+              </Nav.Link>
+              <Nav.Link className="text-white" href="home#expert">
                 Experts
-              </HashLink>
+              </Nav.Link>
+              {/* <HashLink className="text-white" to="home#expert">
+                Experts
+              </HashLink> */}
               <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -36,6 +43,9 @@ const Header = () => {
             <Nav>
               <Nav.Link as={Link} to="/about">
                 About
+              </Nav.Link>
+              <Nav.Link as={Link} to="/map">
+                Map
               </Nav.Link>
               {user ? (
                 <button
@@ -50,6 +60,19 @@ const Header = () => {
                 </Nav.Link>
               )}
             </Nav>
+            <div>
+              {user?.photoURL ? (
+                <img
+                  width={40}
+                  className="rounded-circle border-white border border-2"
+                  src={user?.photoURL}
+                  alt=""
+                  srcset=""
+                />
+              ) : (
+                <FaUserCircle className="text-white fs-3" />
+              )}
+            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>

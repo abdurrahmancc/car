@@ -13,15 +13,15 @@ const Service = ({ service }) => {
 
   return (
     <div className="col-lg-4 col-md-6">
-      <div class="card" style={{ width: "18rem" }}>
-        <img src={img} class="card-img-top" alt="..." />
-        <div class="card-body">
-          <h5 class="card-title">{name}</h5>
+      <div className="card" style={{ width: "18rem" }}>
+        <img src={img} className="card-img-top" alt="..." />
+        <div className="card-body">
+          <h5 className="card-title">{name}</h5>
           <p>{price}</p>
-          <p class="card-text">{description}</p>
-          {/* <button class="btn btn-primary" onClick={() => navigate("/service/" + id)}> */}
+          <p className="card-text">{description}</p>
+          {/* <button className="btn btn-primary" onClick={() => navigate("/service/" + id)}> */}
           {/* </button> */} {/* optional */}
-          <Link class="btn btn-primary" to={`/service/${id}`}>
+          <Link className="btn btn-primary" to={`/service/${id}`}>
             More Details
           </Link>
         </div>
