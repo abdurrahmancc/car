@@ -11,9 +11,11 @@ import ServiceDetail from "./Components/Pages/ServiceDetail/ServiceDetail";
 import Register from "./Components/Pages/Home/Register/Register";
 import RequireAuth from "./Components/Pages/Login/RequireAuth";
 import CheckOut from "./Components/Pages/Home/CheckOut/CheckOut";
+import AddService from "./Components/Pages/Home/AddService/AddService";
 import { Toaster } from "react-hot-toast";
 import GoogleMap from "./Components/GoogleMap/GoogleMap";
 import Direction from "./Components/Direction/Direction";
+import ManageService from "./Components/Pages/ManageService/ManageService";
 
 function App() {
   return (
@@ -40,6 +42,22 @@ function App() {
           element={
             <RequireAuth>
               <CheckOut></CheckOut>
+            </RequireAuth>
+          }
+        ></Route>
+        <Route
+          path="/addservice"
+          element={
+            <RequireAuth>
+              <AddService></AddService>
+            </RequireAuth>
+          }
+        ></Route>
+        <Route
+          path="/manageService"
+          element={
+            <RequireAuth>
+              <ManageService></ManageService>
             </RequireAuth>
           }
         ></Route>

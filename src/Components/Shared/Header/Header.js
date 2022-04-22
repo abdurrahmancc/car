@@ -11,7 +11,7 @@ import { FaUserCircle } from "react-icons/fa";
 const Header = () => {
   const [user] = useAuthState(auth);
 
-  console.log("userssssss", user);
+  // console.log("userssssss", user);
 
   return (
     <>
@@ -44,6 +44,12 @@ const Header = () => {
               <Nav.Link as={Link} to="/about">
                 About
               </Nav.Link>
+              {user && (
+                <Nav.Link as={Link} to="/manageService">
+                  ManageService
+                </Nav.Link>
+              )}
+
               <Nav.Link as={Link} to="/map">
                 Map
               </Nav.Link>
