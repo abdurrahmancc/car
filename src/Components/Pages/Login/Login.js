@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import {
@@ -22,15 +23,20 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    signInWithEmailAndPassword(email, password);
+    await signInWithEmailAndPassword(email, password);
+    const { data } = await axios.post("https://still-woodland-48475.herokuapp.com/login", {
+      email,
+    });
+    localStorage.setItem("accessToken", data.accessToken);
+    navigate(from, { replace: true });
   };
 
   if (users) {
-    navigate(from, { replace: true });
+    // navigate(from, { replace: true });
   }
 
   const passwordReset = async () => {

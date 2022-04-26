@@ -16,6 +16,7 @@ import { Toaster } from "react-hot-toast";
 import GoogleMap from "./Components/GoogleMap/GoogleMap";
 import Direction from "./Components/Direction/Direction";
 import ManageService from "./Components/Pages/ManageService/ManageService";
+import Orders from "./Components/Pages/Orders/Orders";
 
 function App() {
   return (
@@ -33,12 +34,20 @@ function App() {
             </RequireAuth>
           }
         ></Route>
+        <Route
+          path="/orders"
+          element={
+            <RequireAuth>
+              <Orders></Orders>
+            </RequireAuth>
+          }
+        ></Route>
         <Route path="/map" element={<GoogleMap></GoogleMap>}></Route>
         <Route path="/service/:id" element={<ServiceDetail></ServiceDetail>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/register" element={<Register></Register>}></Route>
         <Route
-          path="/checkout"
+          path="/checkout/:id"
           element={
             <RequireAuth>
               <CheckOut></CheckOut>

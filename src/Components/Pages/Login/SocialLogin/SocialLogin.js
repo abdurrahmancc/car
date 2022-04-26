@@ -4,16 +4,18 @@ import facebook from "../../../images/Social//facebook.png";
 import gitHub from "../../../images/Social//github.png";
 import { useSignInWithGithub, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import auth from "../../../../Firebase/Firebase.init";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const SocialLogin = () => {
   const [signInWitGoogle, user, loading, error] = useSignInWithGoogle(auth);
   const [signInWithGithub, user1, loading1, error1] = useSignInWithGithub(auth);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   if (user || user1) {
-    navigate("/home");
+    navigate(from, { replace: true });
     toast.success("Successfully created!", { id: "success" });
   }
   if (error || error1) {

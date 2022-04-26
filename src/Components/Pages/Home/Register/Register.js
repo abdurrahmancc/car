@@ -82,7 +82,7 @@ const Register = () => {
         <h1 className="text-center">Please Register</h1>
         <form onSubmit={handleRegisterSubmit}>
           <span>Your Full Name</span>
-          <input type="text" placeholder="Your full name" name="name" id="" />
+          <input type="text" placeholder="Your full name" required name="name" id="" />
           <br />
           <span>Your Number</span>
           <input type="text" placeholder="Your Phone Number" name="number" id="" />
