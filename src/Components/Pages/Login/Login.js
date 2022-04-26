@@ -12,6 +12,7 @@ import auth from "../../../Firebase/Firebase.init";
 import PageTitle from "../../Shared/PageTitle/PageTitle";
 import Loading from "./Loading/Loading";
 import SocialLogin from "./SocialLogin/SocialLogin";
+import useToken from "../../Hooks/useToken";
 
 const Login = () => {
   const emailRef = useRef("");
@@ -22,21 +23,17 @@ const Login = () => {
   const [sendPasswordResetEmail, sending, resetError] = useSendPasswordResetEmail(auth);
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  const [token] = useToken(user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     await signInWithEmailAndPassword(email, password);
-    const { data } = await axios.post("https://still-woodland-48475.herokuapp.com/login", {
-      email,
-    });
-    localStorage.setItem("accessToken", data.accessToken);
-    navigate(from, { replace: true });
   };
 
-  if (users) {
-    // navigate(from, { replace: true });
+  if (token) {
+    navigate(from, { replace: true });
   }
 
   const passwordReset = async () => {

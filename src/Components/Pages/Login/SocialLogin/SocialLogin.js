@@ -6,6 +6,7 @@ import { useSignInWithGithub, useSignInWithGoogle } from "react-firebase-hooks/a
 import auth from "../../../../Firebase/Firebase.init";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import useToken from "../../../Hooks/useToken";
 
 const SocialLogin = () => {
   const [signInWitGoogle, user, loading, error] = useSignInWithGoogle(auth);
@@ -13,8 +14,9 @@ const SocialLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  const [token] = useToken(user || user1);
 
-  if (user || user1) {
+  if (token) {
     navigate(from, { replace: true });
     toast.success("Successfully created!", { id: "success" });
   }

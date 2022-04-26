@@ -8,6 +8,7 @@ import {
 import "./Register.css";
 import auth from "../../../../Firebase/Firebase.init";
 import toast from "react-hot-toast";
+import useToken from "../../../Hooks/useToken";
 
 const Register = () => {
   const [agree, setAgree] = useState(false);
@@ -22,6 +23,7 @@ const Register = () => {
     auth,
     { sendEmailVerification: true }
   );
+  const [token] = useToken(user || users);
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   // const [sendEmailVerification, sending] = useSendEmailVerification(auth);
@@ -56,8 +58,9 @@ const Register = () => {
   //   // navigate("/home");
   //   console.log("user", user);
   // }
-  if (users) {
+  if (token) {
     navigate(from, { replace: true });
+    // navigate("/home");
   }
 
   const handleEnterPress = (e) => {

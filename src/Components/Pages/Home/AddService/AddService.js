@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const AddService = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -18,6 +18,7 @@ const AddService = () => {
       .then((res) => res.json())
       .then((data) => console.log(data));
     toast.success("created!!!!");
+    reset();
   };
   return (
     <div className="mx-auto w-50">

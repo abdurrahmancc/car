@@ -24,7 +24,7 @@ const RequireAuth = ({ children }) => {
     return (
       <div>
         <h5 className="text-danger">your email is not verified</h5>
-        <h4>please verified your email</h4>
+        <h4>please verified your email {user?.email}</h4>
         <button
           onClick={async () => {
             await sendEmailVerification();

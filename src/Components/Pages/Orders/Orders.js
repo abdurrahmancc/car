@@ -14,7 +14,7 @@ const Orders = () => {
 
   useEffect(() => {
     const getOrder = async () => {
-      const email = user.email;
+      const email = user?.email;
       const url = `https://still-woodland-48475.herokuapp.com/orders?email=${email}`;
 
       try {
